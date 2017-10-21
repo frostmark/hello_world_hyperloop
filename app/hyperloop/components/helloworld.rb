@@ -17,8 +17,7 @@
     end
 
     after_mount do
-      # any client only post rendering initialization goes here.
-      # i.e. start timers, HTTP requests, and low level jquery operations etc.
+      @helloworldmodels = Helloworldmodel.all
     end
 
     before_update do
@@ -48,6 +47,34 @@
       MyStore.show_field ? logo.hide('slow') : logo.show('slow')
     end
 
+    def description_table
+      DIV do
+        BR
+        TABLE(class: 'table table-hover table-condensed') do
+          THEAD do
+            TR(class: 'table-danger') do
+              TD(width: '33%') { 'Saved hello world' }
+            end
+          end
+          TBODY do
+            @helloworldmodels.each do |helloworldmodel|
+              TR(class: 'table-success') do
+                TD(width: '50%') { helloworldmodel.description }
+              end
+            end
+          end
+        end
+      end
+    end
+
+    def self.save_description
+      Helloworldmodel.create(:description => MyStore.field_value) do |result|
+        alert "unable to save" unless result == true
+      end
+      alert("Data saved : #{MyStore.field_value}")
+      MyStore.mutate.field_value ""
+    end
+
     render(DIV) do
       DIV(class: 'hyperloophelloword') do
         IMG(src: 'https://rawgit.com/ruby-hyperloop/hyperloop-js-helloworld/master/hyperloop-logo-medium-white.png?raw=true')
@@ -59,6 +86,7 @@
         DIV(class: 'formdiv') do
           InputBox()
           show_text
+          description_table
         end if MyStore.show_field
       end
     end
