@@ -1,9 +1,5 @@
 
   class Helloworld < Hyperloop::Component
-
-    state show_field: false
-    state field_value: ''
-
     # param :my_param
     # param param_with_default: "default value"
     # param :param_with_default2, default: "default value" # alternative syntax
@@ -37,7 +33,7 @@
       BUTTON(class: 'btn btn-info') do
         state.show_field ? "Click to hide HelloWorld input field" : "Click to show HelloWorld input field"
       end.on(:click) do |ev|
-        mutate.show_field !state.show_field
+        MyStore.toggle_field
         toggle_logo(ev)
       end
     end
@@ -52,18 +48,18 @@
       end
 
       INPUT(type: :text, class: 'form-control').on(:change) do |e|
-        mutate.field_value e.target.value
+        MyStore.mutate.field_value e.target.value
       end
     end
 
     def show_text
-      H1 { "#{state.field_value}" }
+      H1 { "#{MyStore.field_value}" }
     end
 
     def toggle_logo(ev)
       ev.prevent_default
       logo = Element['img']
-      state.show_field ? logo.hide('slow') : logo.show('slow')
+      MyStore.show_field ? logo.hide('slow') : logo.show('slow')
     end
 
     render(DIV) do
@@ -77,7 +73,7 @@
         DIV(class: 'formdiv') do
           show_input
           show_text
-        end if state.show_field
+        end if MyStore.show_field
       end
     end
   end
