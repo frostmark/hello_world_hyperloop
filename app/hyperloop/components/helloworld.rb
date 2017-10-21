@@ -1,6 +1,8 @@
 
   class Helloworld < Hyperloop::Component
 
+    state show_field: false
+
     # param :my_param
     # param param_with_default: "default value"
     # param :param_with_default2, default: "default value" # alternative syntax
@@ -32,8 +34,8 @@
 
     def show_button
       BUTTON(class: 'btn btn-info') do
-        'Toggle button'
-      end
+        state.show_field ? "Click to hide HelloWorld input field" : "Click to show HelloWorld input field"
+      end.on(:click) { mutate.show_field !state.show_field }
     end
 
     def show_input
@@ -59,10 +61,11 @@
         BR{}
 
         show_button
+
         DIV(class: 'formdiv') do
           show_input
           show_text
-        end
+        end if state.show_field
       end
     end
   end
