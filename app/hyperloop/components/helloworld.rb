@@ -38,20 +38,6 @@
       end
     end
 
-    def show_input
-      H4 do
-        SPAN{ 'Please type ' }
-        SPAN(class: 'colored') { 'Hello World' }
-        SPAN{ ' in the input field below: ' }
-        BR{}
-        SPAN{ 'Or anything you want ' }
-      end
-
-      INPUT(type: :text, class: 'form-control').on(:change) do |e|
-        MyStore.mutate.field_value e.target.value
-      end
-    end
-
     def show_text
       H1 { "#{MyStore.field_value}" }
     end
@@ -71,7 +57,7 @@
         show_button
 
         DIV(class: 'formdiv') do
-          show_input
+          InputBox()
           show_text
         end if MyStore.show_field
       end
