@@ -64,14 +64,6 @@
       end
     end
 
-    def self.save_description
-      Helloworldmodel.create(:description => MyStore.field_value) do |result|
-        alert "unable to save" unless result == true
-      end
-      alert("Data saved : #{MyStore.field_value}")
-      MyStore.mutate.field_value ""
-    end
-
     render(DIV) do
       DIV(class: 'hyperloophelloword') do
         IMG(src: 'https://rawgit.com/ruby-hyperloop/hyperloop-js-helloworld/master/hyperloop-logo-medium-white.png?raw=true')

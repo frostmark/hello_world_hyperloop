@@ -6,4 +6,9 @@ class MyStore < Hyperloop::Store
     mutate.show_field !show_field
     mutate.field_value ''
   end
+
+  receives SaveDescriptionOp do
+    alert("Data saved: #{MyStore.field_value}")
+    MyStore.mutate.field_value ""
+  end
 end
