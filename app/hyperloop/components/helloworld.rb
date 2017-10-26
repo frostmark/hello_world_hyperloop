@@ -32,8 +32,7 @@
       BUTTON(class: 'btn btn-info') do
         state.show_field ? "Click to hide HelloWorld input field" : "Click to show HelloWorld input field"
       end.on(:click) do |ev|
-        MyStore.toggle_field
-        toggle_logo(ev)
+        ShowButtonOp.run(ev: ev)
       end
     end
 
@@ -41,7 +40,7 @@
       H1 { "#{MyStore.field_value}" }
     end
 
-    def toggle_logo(ev)
+    def self.toggle_logo(ev)
       ev.prevent_default
       logo = Element['img']
       MyStore.show_field ? logo.hide('slow') : logo.show('slow')
