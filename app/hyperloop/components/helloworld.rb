@@ -58,9 +58,7 @@
           end
           TBODY do
             @helloworldmodels.each do |helloworldmodel|
-              TR(class: 'table-success') do
-                TD(width: '50%') { helloworldmodel.description }
-              end
+              DescriptionRow(descriptionparam: helloworldmodel.description)
             end
           end
         end
